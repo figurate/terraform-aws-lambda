@@ -27,5 +27,7 @@ No requirements.
 
 ## Outputs
 
-No output.
+| Name | Description |
+|------|-------------|
+| function\_name | n/a |
 
