@@ -19,6 +19,7 @@ No requirements.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| environment | Environment variables to configure the Lambda function | `map(string)` | `{}` | no |
 | function\_name | Name of the Lambda function | `any` | n/a | yes |
 | role | IAM role assumed by the Lambda function | `any` | n/a | yes |
 | runtime | A runtime to use for the function (leave blank to use default runtime) | `any` | `null` | no |

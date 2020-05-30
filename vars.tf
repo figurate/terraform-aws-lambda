@@ -11,6 +11,12 @@ variable "runtime" {
   default     = null
 }
 
+variable "environment" {
+  description = "Environment variables to configure the Lambda function"
+  type        = map(string)
+  default     = {}
+}
+
 variable "role" {
   description = "IAM role assumed by the Lambda function"
 }
