@@ -22,6 +22,11 @@ resource "aws_lambda_function" "function" {
   handler          = "${var.function_name}.${local.templates[var.template]["lambda_handler"]}"
   runtime          = var.runtime != null ? var.runtime : local.templates[var.template]["default_runtime"]
   source_code_hash = data.archive_file.function.output_base64sha256
+
+  tracing_config {
+    mode = "Active"
+  }
+
   dynamic "environment" {
     for_each = length(var.environment) > 0 ? [1] : []
     content {
