@@ -1,5 +1,5 @@
 data "archive_file" "function" {
-  source_file = "lambda_handler.py"
+  source_file = "${path.module}/lambda_handler.py"
   output_path = "rds-instance-snapshot.zip"
   type        = "zip"
 }

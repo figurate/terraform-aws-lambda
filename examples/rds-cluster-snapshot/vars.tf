@@ -16,5 +16,5 @@ variable "environment" {
 
 variable "role" {
   description = "IAM role assumed by the Lambda function"
-  default     = "rds-lambda-role"
+  default     = "iam-lambda-role"
 }
