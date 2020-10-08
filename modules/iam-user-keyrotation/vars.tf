@@ -5,7 +5,7 @@ variable "function_name" {
 
 variable "runtime" {
   description = "A runtime to use for the function (leave blank to use default runtime)"
-  default     = null
+  default     = "python3.6"
 }
 
 variable "environment" {

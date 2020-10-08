@@ -2,8 +2,12 @@ variable "function_name" {
   description = "Name of the Lambda function"
 }
 
-variable "template" {
-  description = "A predefined function template"
+variable "filename" {
+  description = "File containing the function"
+}
+
+variable "handler" {
+  description = "Entry point to the lambda function"
 }
 
 variable "runtime" {
@@ -19,4 +23,8 @@ variable "environment" {
 
 variable "role" {
   description = "IAM role assumed by the Lambda function"
+}
+
+variable "source_code_hash" {
+  description = "Hash used to detect function changes on update"
 }

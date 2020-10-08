@@ -4,7 +4,9 @@ No requirements.
 
 ## Providers
 
-No provider.
+| Name | Version |
+|------|---------|
+| archive | n/a |
 
 ## Inputs
 
