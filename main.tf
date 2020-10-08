@@ -1,6 +1,8 @@
 /**
  * # ![AWS](aws-logo.png) Lambda Function
  *
+ * ![AWS Lambda Function](aws_lambda_function.png)
+ *
  * Purpose: Provision a Lambda Function in AWS.
  *
  * Rationale: Apply standards provide templates for Lambda functions.

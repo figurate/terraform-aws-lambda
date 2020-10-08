@@ -1,10 +1,16 @@
 SHELL:=/bin/bash
 TERRAFORM_VERSION=0.12.24
-TERRAFORM=docker run --rm -v "${PWD}:/work" -e AWS_DEFAULT_REGION=$(AWS_DEFAULT_REGION) -e http_proxy=$(http_proxy) --net=host -w /work hashicorp/terraform:$(TERRAFORM_VERSION)
+TERRAFORM=docker run --rm -v "${PWD}:/work" -v "${HOME}:/root" -e AWS_DEFAULT_REGION=$(AWS_DEFAULT_REGION) -e http_proxy=$(http_proxy) --net=host -w /work hashicorp/terraform:$(TERRAFORM_VERSION)
 
 TERRAFORM_DOCS=docker run --rm -v "${PWD}:/work" tmknom/terraform-docs
 
-CHECKOV=docker run -t -v "${PWD}:/work" bridgecrew/checkov
+CHECKOV=docker run --rm -t -v "${PWD}:/work" bridgecrew/checkov
+
+TFSEC=docker run --rm -it -v "${PWD}:/work" liamg/tfsec
+
+DIAGRAMS=docker run -t -v "${PWD}:/work" figurate/diagrams python
+
+EXAMPLE=$(wordlist 2, $(words $(MAKECMDGOALS)), $(MAKECMDGOALS))
 
 .PHONY: all clean validate test docs format
 
@@ -39,7 +45,23 @@ test: validate
 		$(CHECKOV) -d /work/modules/rds-instance-cycle && \
 		$(CHECKOV) -d /work/modules/rds-instance-snapshot
 
-docs:
+	$(TFSEC) /work && \
+		$(TFSEC) /work/modules/cloudfront-request-rewrite && \
+		$(TFSEC) /work/modules/dynamodb-table-import && \
+		$(TFSEC) /work/modules/dynamodb-table-put && \
+		$(TFSEC) /work/modules/ec2-ami-deletion && \
+		$(TFSEC) /work/modules/ec2-instance-cycle && \
+		$(TFSEC) /work/modules/iam-user-keyrotation && \
+		$(TFSEC) /work/modules/rds-cluster-cycle && \
+		$(TFSEC) /work/modules/rds-cluster-snapshot && \
+		$(TFSEC) /work/modules/rds-instance-cycle && \
+		$(TFSEC) /work/modules/rds-instance-snapshot
+
+
+diagram:
+	$(DIAGRAMS) diagram.py
+
+docs: diagram
 	$(TERRAFORM_DOCS) markdown ./ >./README.md && \
 		$(TERRAFORM_DOCS) markdown ./modules/cloudfront-request-rewrite >./modules/cloudfront-request-rewrite/README.md && \
 		$(TERRAFORM_DOCS) markdown ./modules/dynamodb-table-import >./modules/dynamodb-table-import/README.md && \
@@ -64,3 +86,6 @@ format:
 		$(TERRAFORM) fmt -list=true ./modules/rds-cluster-snapshot && \
 		$(TERRAFORM) fmt -list=true ./modules/rds-instance-cycle && \
 		$(TERRAFORM) fmt -list=true ./modules/rds-instance-snapshot
+
+example:
+	$(TERRAFORM) init examples/$(EXAMPLE) && $(TERRAFORM) plan examples/$(EXAMPLE)
