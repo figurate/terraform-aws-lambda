@@ -12,7 +12,7 @@ clean:
 
 validate:
 	$(TERRAFORM) init && $(TERRAFORM) validate && \
-		$(TERRAFORM) init modules/cloudfront-request-rewrite && $(TERRAFORM) validate modules/cloudfront-request-rewrite
+		$(TERRAFORM) -chdir=modules/cloudfront-request-rewrite init && $(TERRAFORM) -chdir=modules/cloudfront-request-rewrite validate
 
 test: validate
 	$(CHECKOV) -d /work && \
