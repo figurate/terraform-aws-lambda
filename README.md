@@ -1,5 +1,7 @@
 # ![AWS](aws-logo.png) Lambda Function
 
+[![CI](https://github.com/figurate/terraform-aws-lambda-function/actions/workflows/main.yml/badge.svg)](https://github.com/figurate/terraform-aws-lambda-function/actions/workflows/main.yml)
+
 ![AWS Lambda Function](aws\_lambda\_function.png)
 
 Purpose: Provision a Lambda Function in AWS.
